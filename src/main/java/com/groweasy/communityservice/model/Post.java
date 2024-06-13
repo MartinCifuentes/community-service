@@ -44,8 +44,8 @@ public class Post {
     @Column(name = "comments", length =6, nullable=false)
     private int comments;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "post_tags", joinColumns = @JoinColumn(name = "post_id"))
+    //@ElementCollection(fetch = FetchType.EAGER)
+    //@CollectionTable(name = "post_tags", joinColumns = @JoinColumn(name = "post_id"))
     @Column(name = "tag", length =25, nullable=false)
-    private List<String> tags;
+    private String tag;
 }

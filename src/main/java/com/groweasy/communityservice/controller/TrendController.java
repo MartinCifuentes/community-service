@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/grow-easy")
+@RequestMapping("/api/v1")
 public class TrendController {
     @Autowired
     private TrendService trendService;

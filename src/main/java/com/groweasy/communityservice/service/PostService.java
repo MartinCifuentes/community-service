@@ -5,4 +5,6 @@ import com.groweasy.communityservice.model.Post;
 public interface PostService {
 
     Post createPost(Post post);
+
+    Post getPostById(Long id);
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 //@RequestMapping("/grow-easy")
-@RequestMapping("/posts")
+@RequestMapping("/api/v1")
 public class PostController {
     @Autowired
     private PostService postService;
@@ -24,15 +24,18 @@ public class PostController {
     }
 
     //@GetMapping("/posts")
-    @GetMapping
+    @GetMapping("/posts")
     public ResponseEntity<List<Post>> getAllPosts() {
         return new ResponseEntity<List<Post>>(postRepository.findAll(), HttpStatus.OK);
     }
 
-    //@GetMapping("/posts/filterByTag")
-    @GetMapping("/filterByTag")
-    public ResponseEntity<List<Post>> getAllPostsByTag() {
-        return new ResponseEntity<List<Post>>(postRepository.findAll(), HttpStatus.OK);
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<Post> getPostById(@PathVariable("id") Long id) {
+        Post post =  postService.getPostById(id);
+        if(null == post){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(post);
     }
 
     //@PostMapping("/posts")
@@ -92,15 +95,12 @@ public class PostController {
             throw new RuntimeException("El número de comentarios debe estar entre 0 y 999999");
         }
 
-        if (post.getTags() != null) {
-            for (String tag : post.getTags()) {
-                if (tag == null || tag.isEmpty()) {
-                    throw new RuntimeException("Las etiquetas de los post no pueden ser nulas o vacías");
-                }
-                if (tag.length() > 25) {
-                    throw new RuntimeException("Cada etiqueta de post no puede tener más de 25 caracteres");
-                }
-            }
+        if(post.getTag() == null || post.getTag().isEmpty()) {
+            throw new RuntimeException("Las etiquetas del post son obligatorias");
+        }
+
+        if(post.getTag().length() > 25) {
+            throw new RuntimeException("Cada etiqueta de post no puede tener más de 25 caracteres");
         }
 
     }
