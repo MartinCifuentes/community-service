@@ -38,8 +38,8 @@ public class PostController {
         return ResponseEntity.ok(post);
     }
 
-    //@PostMapping("/posts")
-    @PostMapping
+    @PostMapping("/posts")
+    //@PostMapping
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
         validatePost(post);
         //existsByNameAndPrice(post);
